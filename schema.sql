@@ -59,3 +59,4 @@ DROP TABLE titles CASCADE;
 DROP TABLE dept_employees CASCADE;
 
 SELECT * FROM titles
+
