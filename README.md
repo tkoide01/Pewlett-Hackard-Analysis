@@ -117,7 +117,7 @@ Then, based on the tables generated from Postgres, we will list up the numerical
      + Now we learn that current head count is 24,0124 and 90,398 is equivalent to **37.64%**
  
      + Also, we run queries to identify which employee titles are impacted most from the upcoming retirment;
-   ```
+   
     SELECT 
       e.emp_no,
       e.first_name,
@@ -164,8 +164,8 @@ Then, based on the tables generated from Postgres, we will list up the numerical
     ORDER by count DESC;
 
     SELECT * FROM count_current_titles;
-    ```
     
+
     From the queries run, we can find two tables comparing the number of retirement by title and the number of current employees by titles:
     *** Currnet
   
