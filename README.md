@@ -116,7 +116,58 @@ Then, based on the tables generated from Postgres, we will list up the numerical
      ![](Data/count_current_emp.png)
      + Now we learn that current head count is 24,0124 and 90,398 is equivalent to **37.64%**
  
-     + Also, 
+     + Also, we run queries to identify which employee titles are impacted most from the upcoming retirment;
+   ```
+    SELECT 
+      e.emp_no,
+      e.first_name,
+      e.last_name,
+      e.birth_date,
+      de.from_date,
+      de.to_date
+    INTO current_emp2
+    FROM employees as e
+    INNER JOIN dept_employees as de
+    ON (e.emp_no = de.emp_no)
+    WHERE (de.to_date = '9999-01-01')
+    ORDER BY e.emp_no ASC;
+
+    -- Join with 'titles' table
+    SELECT
+      ce.emp_no,
+      ce.first_name,
+      ce.last_name,
+      ti.title,
+      ti.from_date,
+      ti.to_date
+    INTO current_emp_titles
+    FROM current_emp2 as ce
+    INNER JOIN titles as ti
+    ON (ce.emp_no = ti.emp_no)
+    ORDER BY ce.emp_no ASC;
+
+    -- Use Dictinct with Orderby to remove duplicate rows
+    SELECT DISTINCT ON (emp_no) 
+      cet.emp_no,
+      cet.first_name,
+      cet.last_name,
+      cet.title
+    INTO current_unique_titles
+    FROM current_emp_titles as cet
+    ORDER BY cet.emp_no ASC, cet.to_date DESC;
+
+    -- Display the number of current employees by title
+    SELECT COUNT (cut.emp_no), cut.title
+    INTO count_current_titles
+    FROM current_unique_titles as cut
+    GROUP by cut.title
+    ORDER by count DESC;
+
+    SELECT * FROM count_current_titles;
+    ```
+    
+    From the queries run, we can find two tables comparing the number of retirement by title and the number of current employees by titles:
+    *** Currnet
   
   2. Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
     
