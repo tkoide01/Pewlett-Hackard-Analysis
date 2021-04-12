@@ -21,42 +21,60 @@ Then, based on the tables generated from Postgres, we will list up the numerical
   
       ![](Data/unique_titles_table.png)
   ```
-  SELECT
-    e.emp_no,
-    e.first_name,
-    e.last_name,
-    ti.title,
-    ti.from_date,
-    ti.to_date
-  INTO retirement_titles
-  FROM employees as e
-  INNER JOIN titles as ti
-  ON (e.emp_no = ti.emp_no)
-  WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
-  ORDER BY e.emp_no ASC;
+    SELECT
+      e.emp_no,
+      e.first_name,
+      e.last_name,
+      ti.title,
+      ti.from_date,
+      ti.to_date
+    INTO retirement_titles
+    FROM employees as e
+    INNER JOIN titles as ti
+    ON (e.emp_no = ti.emp_no)
+    WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
+    ORDER BY e.emp_no ASC;
 
-  -- Use Dictinct with Orderby to remove duplicate rows
-  SELECT DISTINCT ON (emp_no) 
-    r.emp_no,
-    r.first_name,
-    r.last_name,
-    r.title
-  INTO unique_titles
-  FROM retirement_titles as r
-  ORDER BY r.emp_no ASC, r.to_date DESC;
+    -- Use Dictinct with Orderby to remove duplicate rows
+    SELECT DISTINCT ON (emp_no) 
+      r.emp_no,
+      r.first_name,
+      r.last_name,
+      r.title
+    INTO unique_titles
+    FROM retirement_titles as r
+    ORDER BY r.emp_no ASC, r.to_date DESC;
   ```
-    Then, we run the query to count the `emp_no` of the generated `unique_titles` table. This table skips duplicate `emp_no` that may have occured in `dept_employees` table due to event like promotion.
+   Then, we run the query to count the `emp_no` of the generated `unique_titles` table. This table skips duplicate `emp_no` that may have occured in `dept_employees` table due to event like promotion.
+  
   ```
   SELECT COUNT(emp_no) FROM unique_titles;
   ```
-  2. The following table `retiring_title` represents the number of retiring employees by their title. The table depicts that
-  - 
+  2. The following table `retiring_title` represents the number of retiring employees by their title. From the table, we can observe that top 2 retiring titles by the number are `Senior Engineer` and `Senior Staff`, which are **29,414** and **28,255** respectively. Those numbers double the number of employees retiring with `Engineer` and `Staff` titles. These tendency do make sense as we can infer that retiring employees must have working for long years and thus had more chance to be promoted.
+   Therefore, we can observe that this "shilver tsunami" of retiring is impacting more on the senior level employees and thus more concerning as the company will lose more experienced team.
+
       ![](Data/retiring_titles_table.png)
-     
-     Based on the table, we can learn that
-  
-  3. A
-  - A
+       
+  3. Then we utilized Postgres to filter `employees` data to draw employees who are born between January 1, 1965 and December 31, 1965 and also currently working using the below query;
+  ```
+  SELECT DISTINCT ON(emp_no)
+    e.emp_no,
+    e.first_name,
+    e.last_name,
+    e.birth_date,
+    de.from_date,
+    de.to_date,
+    ti.title
+  INTO mentorship_elig
+  FROM employees as e
+  INNER JOIN dept_employees as de
+  ON (e.emp_no = de.emp_no)
+  INNER JOIN titles as ti
+  on (e.emp_no = ti.emp_no)
+  WHERE (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+  AND (de.to_date = '9999-01-01')
+  ORDER BY e.emp_no ASC;
+  ```
   
   4. A
   -
