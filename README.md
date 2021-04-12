@@ -168,9 +168,11 @@ Then, based on the tables generated from Postgres, we will list up the numerical
    From the queries run, we can find two tables comparing the number of retirement by title and the number of current employees by titles:
     
    *** Currnet Employees Count by Titles ***
+   
    ![](Data/current_emp_titles.png)
    
    *** Retiring Employees Count by Title ***
+   
    ![](Data/retiring_titles_table.png)
   
   Comparing the two table, we can observe that, while `Senior Engineer` and `Senior Staff` are the two largest group of employees who are retiring, the proportion of the number retiring is higher for `Engineer`,`Staff`, and `Assistant Engineer` as those groups will lose about 50% of their current employees while `Senior Engineer` and `Senior Staff` will lose about 34% of their members. Therefore, the company should focus on refilling the number of `Assistant Engineer`, `Engineer`, and `Staff` in order to recover the high proportion of labor force that the company is expecting.
@@ -191,9 +193,11 @@ Then, based on the tables generated from Postgres, we will list up the numerical
      SELECT * FROM count_ment_elig_titles;
      ```
    *** Mentorship Eligible Employees Count by Titles ***
+   
    ![](Data/ment_elig_titles.png)
    
    *** Retiring Employees Count by Title ***
+   
    ![](Data/retiring_titles_table.png)
    
    + But we should look ahead for future planning of how the next "silver tsunami" may impact the company when these "mentorship-eligible employees" will retire in the next 10 years. Comparing with the size of mentorship-eligible employees of **1,549** with the current employee number minus the retiring employees, (240,124-90,398), of **149,726**, the number of future retirement-ready employees would be too small to take care of next mentorship program. Thus the company should expand the mentorship eligibility from just between "January 1, 1965 and December 31, 1965" and make the most by waging 90,398 retirement-ready employees to mentor more employees now.
