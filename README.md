@@ -15,7 +15,7 @@ Then, based on the tables generated from Postgres, we will list up the numerical
 - Software: Postgres, pdAdmin 4
 
 ## Results
-  Based on the two technical analysis and tables generated using Postgres, we can infer below obserbations:
+  Based on the two technical analysis and tables generated using Postgres, we can infer below observations:
   
   1. The number of retirement we can expect is **90,398** based on the fact that these employees were born between January 1, 1952 and December 31, 1955.
   
@@ -45,15 +45,16 @@ Then, based on the tables generated from Postgres, we will list up the numerical
   FROM retirement_titles as r
   ORDER BY r.emp_no ASC, r.to_date DESC;
   ```
-  
-  - Total
-
-
-  2. A 
+    Then, we run the query to count the `emp_no` of the generated `unique_titles` table. This table skips duplicate `emp_no` that may have occured in `dept_employees` table due to event like promotion.
+  ```
+  SELECT COUNT(emp_no) FROM unique_titles;
+  ```
+  2. The following table `retiring_title` represents the number of retiring employees by their title. The table depicts that
   - 
-      ![](analysis/PyBer_fare_summary.png)
+      ![](Data/retiring_titles_table.png)
+     
+     Based on the table, we can learn that
   
-  - While, 
   3. A
   - A
   
@@ -64,7 +65,32 @@ Then, based on the tables generated from Postgres, we will list up the numerical
 
   1. How many roles will need to be filled as the "silver tsunami" begins to make an impact?
     
-     + Given 
+     + Given **90,398** employees are expected to retire soon, let us measure how impactful that is to the company by calculating the current head  count.
+     + We can do so by generating a new table on Postgres that displays the currently employees, which is similar to what we did before without filtering by `birth_date` but ensure filtering by `to_date` as below query shows;
+     ```
+     SELECT DISTINCT ON(emp_no)
+        e.emp_no,
+        e.first_name,
+        e.last_name,
+        e.birth_date,
+        de.from_date,
+        de.to_date,
+        ti.title
+     INTO current_emp2
+     FROM employees as e
+     INNER JOIN dept_employees as de
+     ON (e.emp_no = de.emp_no)
+     INNER JOIN titles as ti
+     on (e.emp_no = ti.emp_no)
+     AND (de.to_date = '9999-01-01')
+     ORDER BY e.emp_no ASC;
+     ```
+     Then run another query to count the number of `emp_no` of the new `current_emp2` table as below;
+     ```
+     SELECT COUNT(emp_no) FROM current_emp2;
+     ```
+     ![](Data/count_current_emp.png)
+     + Now we learn that current head count is 24,0124 and 90,398 is equivalent to **37.64%**
  
      + Also, 
   
