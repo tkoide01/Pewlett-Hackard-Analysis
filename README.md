@@ -7,7 +7,7 @@ Using SQL, organize the employee data represented in several CVS files to determ
 1. The Number of Retiring Employees by Title
 2. The Employees Eligible for the Mentorship Program
 
-Then, based on the tables generated from Postgres, we will list up the numerical observation we can draw from the tables and answer several key questions of how the company should react to this upcoming "shilver tsunami" of retirements.
+Then, based on the tables generated from Postgres, we will list up the numerical observation we can draw from the tables and answer several key questions of how the company should react to this upcoming "silver tsunami" of retirements.
 ## Resources
 - Data Source: departments.csv, dept_emp.csv, dept_manager.csv, employees.csv, salaries.csv, titles.csv
 - Output Data: retirement_titles.csv, unique_titles.csv, retiring_titles.csv, mentorship_eligibility.csv
@@ -51,7 +51,7 @@ Then, based on the tables generated from Postgres, we will list up the numerical
   SELECT COUNT(emp_no) FROM unique_titles;
   ```
   2. The following table `retiring_title` represents the number of retiring employees by their title. From the table, we can observe that top 2 retiring titles by the number are `Senior Engineer` and `Senior Staff`, which are **29,414** and **28,255** respectively. Those numbers double the number of employees retiring with `Engineer` and `Staff` titles. These tendency do make sense as we can infer that retiring employees must have working for long years and thus had more chance to be promoted.
-   Therefore, we can observe that this "shilver tsunami" of retiring is impacting more on the senior level employees and thus more concerning as the company will lose more experienced team.
+   Therefore, we can observe that this "silver tsunami" of retiring is impacting more on the senior level employees and thus more concerning as the company will lose more experienced team.
 
       ![](Data/retiring_titles_table.png)
        
@@ -76,8 +76,14 @@ Then, based on the tables generated from Postgres, we will list up the numerical
   ORDER BY e.emp_no ASC;
   ```
   
-  4. A
-  -
+  4. Using the `COUNT(emp_no)` query on the newly generated `mentorship_elig` table, we learn that the number of mentorship-eligible employees is only **1,549**.
+
+      ![](Data/count_mentorship_elig.png)
+  
+  The query run is as below;
+  ```
+  SELECT COUNT(emp_no) FROM mentorship_elig;
+  ```
 ## Summary
    Based on the results, I will respond to following two quetions in response to the upcoming "silver-tsunami" that we can expect from the technical analysis.
 
