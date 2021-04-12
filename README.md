@@ -114,7 +114,7 @@ Then, based on the tables generated from Postgres, we will list up the numerical
      SELECT COUNT(emp_no) FROM current_emp2;
      ```
      ![](Data/count_current_emp.png)
-     + Now we learn that current head count is 24,0124 and 90,398 is equivalent to **37.64%**
+     + Now we learn that current head count is 240,124 and 90,398 is equivalent to **37.64%**
  
      + Also, we run queries to identify which employee titles are impacted most from the upcoming retirment;
    
@@ -165,13 +165,38 @@ Then, based on the tables generated from Postgres, we will list up the numerical
 
     SELECT * FROM count_current_titles;
     
-
-    From the queries run, we can find two tables comparing the number of retirement by title and the number of current employees by titles:
-    *** Currnet
+   From the queries run, we can find two tables comparing the number of retirement by title and the number of current employees by titles:
+    
+   *** Currnet Employees Count by Titles ***
+   ![](Data/current_emp_titles.png)
+   
+   *** Retiring Employees Count by Title ***
+   ![](Data/retiring_titles_table.png)
   
+  Comparing the two table, we can observe that, while `Senior Engineer` and `Senior Staff` are the two largest group of employees who are retiring, the proportion of the number retiring is higher for `Engineer`,`Staff`, and `Assistant Engineer` as those groups will lose about 50% of their current employees while `Senior Engineer` and `Senior Staff` will lose about 34% of their members. Therefore, the company should focus on refilling the number of `Assistant Engineer`, `Engineer`, and `Staff` in order to recover the high proportion of labor force that the company is expecting.
+  
+  In addition, we should be alarmed by the number of `Manager` expected to retire. The number of retirment is only 2 out of 9, which is roughly 22%, and may sound trivial compared to other groups' retirement proportion. But the company should carefully assess the impact of deviding the current Manager's role with only 7 people as the increase in pressure that each `Manager` would experience may be much higher compared to other title groups.
+   
+    
   2. Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
     
-     + Based 
+   + Based on the new table that measures the number of mentorship-eligible employees by title, the number of retirement-ready employees with each title is much more sufficient.
+     ```
+     SELECT COUNT (me.emp_no), me.title
+     INTO count_ment_elig_titles
+     FROM mentorship_elig as me
+     GROUP by me.title
+     ORDER by count DESC;
 
-     + In order to 
+     SELECT * FROM count_ment_elig_titles;
+     ```
+   *** Mentorship Eligible Employees Count by Titles ***
+   ![](Data/ment_elig_titles.png)
+   
+   *** Retiring Employees Count by Title ***
+   ![](Data/retiring_titles_table.png)
+   
+   + But we should look ahead for future planning of how the next "silver tsunami" may impact the company when these "mentorship-eligible employees" will retire in the next 10 years. Comparing with the size of mentorship-eligible employees of **1,549** with the current employee number minus the retiring employees, (240,124-90,398), of **149,726**, the number of future retirement-ready employees would be too small to take care of next mentorship program. Thus the company should expand the mentorship eligibility from just between "January 1, 1965 and December 31, 1965" and make the most by waging 90,398 retirement-ready employees to mentor more employees now.
+   
+   
   
